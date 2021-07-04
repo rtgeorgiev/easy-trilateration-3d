@@ -26,3 +26,4 @@ zc.lockfile==1.4
 ZConfig==3.5.0
 ZODB==5.5.1
 zodbpickle==1.0.4
+pandas

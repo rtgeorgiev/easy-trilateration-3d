@@ -1,6 +1,7 @@
 from scipy.optimize import least_squares
 from src.utils.graph import *
 from src.model.circle import *
+from src.model.point import *
 
 
 def rssiToDistance(rssi):
@@ -8,8 +9,10 @@ def rssiToDistance(rssi):
 
 
 def leastSquares(crls, guess=(0, 0, 0)):
-    xf, yf, rf = least_squares(equations, guess, args=[crls]).x
-    return Circle(Point(xf, yf), rf)
+    result = least_squares(equations, guess, args=[crls])
+    xf, yf, rf = result.x
+
+    return Circle(Point(xf, yf), rf), result
 
 
 def equations(guess, crls: [Circle]):
@@ -31,7 +34,7 @@ if __name__ == '__main__':
                Circle(Point(50, 50), rssiToDistance(-77.1113)),
                Circle(Point(0, 25), rssiToDistance(-72.5948)),
                Circle(Point(50, 25), rssiToDistance(-72.5948))]
-    create_circle(leastSquares(circles), target=True)
+    result_cirl, meta = leastSquares(circles)
+    create_circle(result_cirl, target=True)
     draw([circles[0], circles[1], circles[2], circles[3], circles[4], circles[5], circles[6], circles[7],
           circles[8], circles[9]])
-

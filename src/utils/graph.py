@@ -104,38 +104,3 @@ def find_intersections(list):
                     print("intersects on " + str(item3))
                     ret.add(item3)
     return ret
-
-
-def testDraw():
-    drawlist = []
-    pos = 2.999 * np.random.rand(10, 2)
-    for x, y in pos:
-        circlea = Circle(Point(x, y), 0.5)
-        circleb = Circle(Point(x + 0.25, y + 0.25), 0.5)
-        drawlist.append(circlea)
-        drawlist.append(circleb)
-    for intersection in find_intersections(drawlist):
-        drawlist.append(intersection)
-    draw(drawlist)
-
-
-def rssiToDistance(rssi):
-    return 10 ** (-1 * (rssi + 17) / 38)
-
-
-def testDraw2():
-    # 1
-    c1 = Circle(Point(150, 100), rssiToDistance(-72.5948))
-    # 3
-    c2 = Circle(Point(100, 50), rssiToDistance(-73.2301))
-    # 6
-    c3 = Circle(Point(76.5, 100), rssiToDistance(-73.3082))
-
-    drawlist = [c1, c2, c3]
-    create_circle(leastSquares(drawlist), target=True)
-    draw(drawlist)
-
-
-if __name__ == '__main__':
-    testDraw2()
-    # testDraw()

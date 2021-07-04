@@ -11,7 +11,7 @@ class Point(Base):
     x = Column(Float)
     y = Column(Float)
 
-    def __init__(self, x_init, y_init):
+    def __init__(self, x_init: Float, y_init: Float):
         self.x = x_init
         self.y = y_init
 
