@@ -1,6 +1,8 @@
 # Least-Squares-Trilateration
 Trilateration example using least squares method in scipy.
 
+![img.png](img.png)
+
 Trilateration enables the unknown point to be found. However a since there are a number of samples a non linear least squares method needs to be used to find the solution that has the least error. 
 
 It is distinct from triangulation which has a series of angles to an unknown point. Trilateration uses a series of distances to an unkown point.
