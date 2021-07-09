@@ -2,14 +2,12 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 from random import randint
-# use ggplot style for more sophisticated visuals
-from src.model.circle import Circle
-from src.model.point import Point
-from src.utils.least_squares import *
+
+from ls_trilateration import model
 
 
 def live_plotter(x_vec, y1_data, line1, identifier='', pause_time=0.1):
-    if line1 == []:
+    if not line1:
         # this is the call to matplotlib that allows dynamic plotting
         plt.ion()
         fig = plt.figure(figsize=(13, 6))
@@ -33,27 +31,6 @@ def live_plotter(x_vec, y1_data, line1, identifier='', pause_time=0.1):
     return line1
 
 
-# the function below is for updating both x and y values (great for updating dates on the x-axis)
-def live_plotter_xy(x_vec, y1_data, line1, identifier='', pause_time=0.01):
-    if line1 == []:
-        plt.ion()
-        fig = plt.figure(figsize=(13, 6))
-        ax = fig.add_subplot(111)
-        line1, = ax.plot(x_vec, y1_data, 'r-o', alpha=0.8)
-        plt.ylabel('Y Label')
-        plt.title('Title: {}'.format(identifier))
-        plt.show()
-
-    line1.set_data(x_vec, y1_data)
-    plt.xlim(np.min(x_vec), np.max(x_vec))
-    if np.min(y1_data) <= line1.axes.get_ylim()[0] or np.max(y1_data) >= line1.axes.get_ylim()[1]:
-        plt.ylim([np.min(y1_data) - np.std(y1_data), np.max(y1_data) + np.std(y1_data)])
-
-    plt.pause(pause_time)
-
-    return line1
-
-
 def demolive():
     plt.style.use('ggplot')
     size = 100
@@ -67,7 +44,7 @@ def demolive():
         y_vec = np.append(y_vec[1:], 0.0)
 
 
-def create_circle(circle: Circle, target=False):
+def create_circle(circle: model.Circle, target=False):
     color = matplotlib.cm.jet(randint(50, 100))
     if target:
         color = matplotlib.cm.jet(1000)
@@ -76,7 +53,7 @@ def create_circle(circle: Circle, target=False):
     plt.scatter(circle.center.x, circle.center.y, color=color, s=100, zorder=2)
 
 
-def create_point(point: Point, color=matplotlib.cm.jet(randint(0, 00))):
+def create_point(point: model.Point, color=matplotlib.cm.jet(randint(0, 00))):
     plt.scatter(point.x, point.y, color=color, s=100, zorder=2)
 
 
@@ -88,19 +65,11 @@ def add_shape(patch):
 
 def draw(drawlist):
     for item in drawlist:
-        if isinstance(item, Circle):
+        if isinstance(item, model.Circle):
             create_circle(item)
-        if isinstance(item, Point):
+        if isinstance(item, model.Point):
             create_point(item)
     plt.show()
 
 
-def find_intersections(list):
-    ret = set()
-    for item in list:
-        for item2 in list:
-            if item.intersects(item2):
-                for item3 in item.get_intersection_points(item2):
-                    print("intersects on " + str(item3))
-                    ret.add(item3)
-    return ret
+

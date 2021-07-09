@@ -357,4 +357,4 @@ pip-selfcheck.json
 
 \.idea/
 
-data/triangulation.db
+.DS_Store
