@@ -2,7 +2,7 @@
 # easy-trilateration
 Trilateration example using least squares method in scipy (Graphing tools included).
 
-![](https://raw.githubusercontent.com/agusalex/Least-Squares-Trilateration/master/img2.png)
+![](https://github.com/agusalex/easy-trilateration/blob/master/images/img2.png?raw=true)
 
 Trilateration enables the unknown point to be found. However a since there are a number of samples a non linear least squares method needs to be used to find the solution that has the least error. 
 
