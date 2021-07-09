@@ -1,5 +1,5 @@
-from ls_trilateration.graph import *
-from ls_trilateration.model import *
+from easy_trilateration.graph import *
+from easy_trilateration.model import *
 from scipy.optimize import least_squares
 
 

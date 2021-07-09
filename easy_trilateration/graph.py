@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from random import randint
 
-from ls_trilateration import model
+from easy_trilateration import model
 
 
 def live_plotter(x_vec, y1_data, line1, identifier='', pause_time=0.1):
