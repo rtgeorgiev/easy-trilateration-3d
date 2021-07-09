@@ -1,20 +1,13 @@
 from src.model.point import Point
 from math import sqrt
-from sqlalchemy import Column, Float, Integer, ForeignKey
-from sqlalchemy.orm import relationship
-from src.utils.base import Base
 
 
-class Circle(Base):
-    __tablename__ = 'circle'
+class Circle:
 
-    id = Column(Integer, primary_key=True)
-    center_id = Column(Integer, ForeignKey("point.id"))
-    center = relationship("Point", foreign_keys=[center_id])
-    radius = Column(Float)
+    center: Point
+    radius: float
 
     def __init__(self, point_init: Point, r_init: float):
-        self.x = None
         self.center = point_init
         self.radius = r_init
 
