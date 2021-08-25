@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     _filename = args.file
 
-    file = pd.read_csv("resources/capture_combined.csv")
+    file = pd.read_csv(_filename)
 
     temp_tril = []
     history = []
