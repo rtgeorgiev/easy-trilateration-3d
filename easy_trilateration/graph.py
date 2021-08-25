@@ -4,26 +4,56 @@ from matplotlib.animation import FuncAnimation
 from easy_trilateration import model
 import matplotlib
 
-
-def animate(history: [model.Trilateration], ax=plt.axes()):
-    new = FuncAnimation(plt.gcf(), anim, len(history), fargs=(history, ax,), repeat=False)
-    plt.show()
-    return new
+from easy_trilateration.model import Point
 
 
-def anim(i, history: [model.Trilateration], ax):
+def static(history: [model.Trilateration], actual: [Point] = [], ax=plt.axes()):
     x_values = []
     y_values = []
-    for i in range(i + 1):
-        item = history[i]
-        x_values.append(item.result.center.x)
-        y_values.append(item.result.center.y)
 
-    for item in history[i].sniffers:
-        create_point(item.center)
+    sniffers = set()
+    to_draw = []
+    for i in range(len(history)):
+        tri = history[i]
+        for sniffer in tri.sniffers:
+            sniffers.add(sniffer.center)
+        x_values.append(tri.result.center.x)
+        y_values.append(tri.result.center.y)
+        if i % 10 == 0:
+            to_draw.append(create_circle(tri.result))
+        if i == 0:
+            for sniff in sniffers:
+                to_draw.append(create_point(sniff, color="red"))
 
-    create_circle(history[i].result, target=True)
-    ax.plot(x_values, y_values, 'blue', linestyle='--')
+    actual_x = []
+    actual_y = []
+    draw(to_draw)
+    plt.plot(x_values, y_values, color="blue", linewidth=1)
+
+    for act in actual:
+        actual_x.append(act.x)
+        actual_y.append(act.y)
+    plt.plot(actual_x, actual_y, color="green", linewidth=3)
+
+
+# def animate(history: [model.Trilateration], ax=plt.axes()):
+#    new = FuncAnimation(plt.gcf(), anim, len(history), fargs=(history, ax,), repeat=False)
+# plt.show()
+#    return new
+
+
+# def anim(i, history: [model.Trilateration], ax):
+#    x_values = []
+#    y_values = []
+#    for i in range(i + 1):
+#        if i % 100 == 0:
+#            item = history[i]
+#            x_values.append(item.result.center.x)
+#            y_values.append(item.result.center.y)
+# for item in history[i].sniffers:
+# create_point(item.center)
+#    create_circle(history[i].result, target=True)
+#    ax.plot(x_values, y_values, 'blue', linestyle='--')
 
 
 def create_circle(circle: model.Circle, target=False):
@@ -36,7 +66,7 @@ def create_circle(circle: model.Circle, target=False):
 
 
 def create_point(point: model.Point, color=matplotlib.cm.jet(randint(0, 00))):
-    plt.scatter(point.x, point.y, color=color, s=100, zorder=2)
+    plt.scatter(int(point.x), int(point.y), color=color, s=100, zorder=2)
 
 
 def add_shape(patch):

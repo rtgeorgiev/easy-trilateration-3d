@@ -8,7 +8,7 @@ def solve_history(history: [Trilateration]):
         guess = solve(item, guess)
 
 
-def solve(trilateration, guess: Circle = Circle(0, 0, 0)) -> Circle:
+def solve(trilateration: Trilateration, guess: Circle = Circle(0, 0, 0)) -> Circle:
     result, meta = easy_least_squares(trilateration.sniffers, guess)
     trilateration.result = result
     return result
