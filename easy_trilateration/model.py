@@ -40,6 +40,7 @@ class Circle:
 class Trilateration:
     sniffers: [Circle]
     result: Circle
+    meta: []
 
     def __init__(self, sniffers: [Circle], result: Circle = None):
         self.sniffers = sniffers

@@ -1,6 +1,3 @@
-import matplotlib.pyplot as plt
-import pandas as pd
-from easy_trilateration.model import *
 import argparse
 from easy_trilateration.least_squares import *
 from easy_trilateration.graph import *
@@ -16,7 +13,7 @@ def trilateration_example():
     draw(arr)
 
 
-def history_example() -> [Trilateration]:
+def history_example():
     arr = Trilateration([Circle(100, 100, 70.71),
                          Circle(100, 50, 50),
                          Circle(50, 50, 0),
@@ -37,11 +34,10 @@ def history_example() -> [Trilateration]:
                           Circle(50, 50, 50),
                           Circle(50, 100, 70.71)])
 
-    hist: [Trilateration] = [arr, arr2, arr3, arr4, arr]
+    hist = [arr, arr2, arr3, arr4, arr]
 
     solve_history(hist)
 
-    _a = animate(hist)
     return _a
 
 
@@ -66,10 +62,11 @@ if __name__ == '__main__':
     #  for value in node.values():
     #      draws.append(create_point(value))
     #  draw(draws)
+    enabled_nodes = [3, 1, 6, 8]
     actual = []
     for _, row in file.iterrows():
         actual.append(Point(float(row['target_x']), float(row['target_y'])))
-        if row['node'] == 2 or row['node'] == 4 or row['node'] == 6 or row['node'] == 8 or True:
+        if enabled_nodes.__contains__(row['node']) or False:
             if millis == row['millis']:
                 temp_tril.append(Circle(float(row['x']), float(row['y']), rssi_to_distance(row['rssi'])))
             else:
@@ -77,5 +74,7 @@ if __name__ == '__main__':
                 temp_tril = []
                 millis = row['millis']
 
+    #  solve_history_linear(history)
+    #  _a = static(history, actual)
     solve_history(history)
-    _a = static(history, actual)
+    _b = static(history, actual)
