@@ -62,7 +62,7 @@ if __name__ == '__main__':
     #  for value in node.values():
     #      draws.append(create_point(value))
     #  draw(draws)
-    enabled_nodes = [3, 1, 6, 8]
+    enabled_nodes = [3, 1, 6]
     actual = []
     for _, row in file.iterrows():
         actual.append(Point(float(row['target_x']), float(row['target_y'])))
